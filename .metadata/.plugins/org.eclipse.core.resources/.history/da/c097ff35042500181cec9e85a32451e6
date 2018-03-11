@@ -1,0 +1,16 @@
+package com.yindeyue.controller;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ConfigurationClass {
+	@Bean
+	public String shiyan(){
+		return new String("shiyan");
+	}
+	@Bean
+	public String shiyan2(){
+		return new String("shiyan2");
+	}
+}

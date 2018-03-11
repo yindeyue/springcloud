@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;Service2.java&apos; to &apos;motan-client/src/main/java/com.yindeyue.service&apos;&#x0D;&#x0A;- Original project: &apos;motan-client&apos;&#x0D;&#x0A;- Destination element: &apos;motan-client/src/main/java/com.yindeyue.service&apos;&#x0D;&#x0A;- Original element: &apos;com.yindeyue.controller.Service2.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src\/main\/java&lt;com.yindeyue.service" element1="/src\/main\/java&lt;com.yindeyue.controller{Service2.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1520172674933" units="1" version="1.0"/>
+</session>

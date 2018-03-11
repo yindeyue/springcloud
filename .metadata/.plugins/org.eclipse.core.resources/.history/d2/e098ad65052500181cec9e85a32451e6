@@ -1,0 +1,12 @@
+package com.yindeyue.controller;
+
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+public class AdviceController {
+@ExceptionHandler
+public String error(){
+	return "出错啦！";
+}
+}

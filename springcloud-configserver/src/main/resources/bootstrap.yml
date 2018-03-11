@@ -1,0 +1,11 @@
+server:
+ port: 8000
+spring:
+ config:
+  name: configserver2
+ cloud:
+  config:
+   server:
+    git:
+     uri: file:///C://Users//Administrator//AppData//Local//Temp//config-repo-8873462209452313319
+     searchPaths: shiyan

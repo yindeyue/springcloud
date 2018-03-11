@@ -1,0 +1,5 @@
+package com.yindeyue.mapper1;
+
+public interface ShiyanMapper1 {
+
+}

@@ -1,0 +1,111 @@
+package com.yindeyue.controller;
+
+import java.util.Properties;
+
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.transaction.jta.JtaTransactionManager;
+
+import com.atomikos.icatch.jta.UserTransactionManager;
+
+@Configuration
+public class XAConfiguration {
+	/************************** atomikos 多数据源配置 ***************************/
+
+	/*------- db1 -------*/
+
+	/**
+	 * db1的 XA datasource
+	 *
+	 * @return
+	 */
+	@Bean
+	@Qualifier("db1")
+	public AtomikosDataSourceBean db1DataSourceBean() {
+		AtomikosDataSourceBean atomikosDataSourceBean = new AtomikosDataSourceBean();
+		atomikosDataSourceBean.setUniqueResourceName("db1");
+		atomikosDataSourceBean.setXaDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
+		Properties properties = new Properties();
+		properties.put("URL", "jdbc:mysql://localhost:3306/test");
+		properties.put("user", "root");
+		properties.put("password", "");
+		atomikosDataSourceBean.setXaProperties(properties);
+		return atomikosDataSourceBean;
+	}
+
+	/**
+	 * 构造db1 sessionFactory
+	 *
+	 * @return
+	 */
+	@Bean("sql1")
+	public SqlSessionFactoryBean sessionFactory() {
+		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+		sessionFactory.setDataSource(db1DataSourceBean());
+		return sessionFactory;
+	}
+
+	/*------- db2 -------*/
+
+	/**
+	 * db2的 XA datasource
+	 *
+	 * @return
+	 */
+	@Bean
+	@Qualifier("db2")
+	public AtomikosDataSourceBean db2DataSourceBean() {
+		AtomikosDataSourceBean atomikosDataSourceBean = new AtomikosDataSourceBean();
+		atomikosDataSourceBean.setUniqueResourceName("db2");
+		atomikosDataSourceBean.setXaDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
+		Properties properties = new Properties();
+		properties.put("URL", "jdbc:mysql://localhost:3306/test2");
+		properties.put("user", "root");
+		properties.put("password", "");
+		atomikosDataSourceBean.setXaProperties(properties);
+		return atomikosDataSourceBean;
+	}
+
+	/**
+	 * 构造db2 sessionFactory
+	 *
+	 * @return
+	 */
+	@Bean("sql2")
+	public SqlSessionFactoryBean db2SessionFactory() {
+		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+		sessionFactory.setDataSource(db2DataSourceBean());
+		return sessionFactory;
+	}
+
+	/*--------- atomikos -----------*/
+
+	/**
+	 * transaction manager
+	 *
+	 * @return
+	 */
+	@Bean(destroyMethod = "close", initMethod = "init")
+	public UserTransactionManager userTransactionManager() {
+		UserTransactionManager userTransactionManager = new UserTransactionManager();
+		userTransactionManager.setForceShutdown(false);
+		return userTransactionManager;
+	}
+
+	/**
+	 * jta transactionManager
+	 *
+	 * @return
+	 */
+	@Bean
+	public JtaTransactionManager transactionManager() {
+		JtaTransactionManager jtaTransactionManager = new JtaTransactionManager();
+		jtaTransactionManager.setTransactionManager(userTransactionManager());
+		return jtaTransactionManager;
+	}
+}

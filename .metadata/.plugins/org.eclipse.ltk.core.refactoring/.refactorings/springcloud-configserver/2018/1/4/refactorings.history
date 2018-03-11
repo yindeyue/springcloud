@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Extract local variable &apos;run&apos; from expression &apos;SpringApplication.run(ConfigServerApplication.class,args)&apos;&#x0D;&#x0A;- Original project: &apos;springcloud-configserver&apos;&#x0D;&#x0A;- Variable name: &apos;run&apos;&#x0D;&#x0A;- Destination method: &apos;com.yindeyue.springcloud.ConfigServerApplication.main()&apos;&#x0D;&#x0A;- Variable expression: &apos;SpringApplication.run(ConfigServerApplication.class,args)&apos;&#x0D;&#x0A;- Replace occurrences of expression with variable" description="Extract local variable &apos;run&apos;" final="false" id="org.eclipse.jdt.ui.extract.temp" input="/src\/main\/java&lt;com.yindeyue.springcloud{ConfigServerApplication.java" name="run" replace="true" selection="428 0" stamp="1516629343038" version="1.0"/>
+</session>

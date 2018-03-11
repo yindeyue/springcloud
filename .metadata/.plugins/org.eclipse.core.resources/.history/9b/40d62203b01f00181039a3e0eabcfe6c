@@ -1,0 +1,43 @@
+package com.yindeyue.contrller;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import com.weibo.api.motan.config.springsupport.RegistryConfigBean;
+
+@SpringBootApplication
+public class Application {
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+	@Bean(name = "registry")
+	public RegistryConfigBean registryConfig() {
+		RegistryConfigBean config = new RegistryConfigBean();
+		config.setRegProtocol("zookeeper");
+		config.setAddress("127.0.0.1");
+		config.setRequestTimeout(6000);
+		config.setConnectTimeout(6000);
+		config.setRegistryRetryPeriod(6000);
+		return config;
+	}
+
+	@Bean(name = "motan")
+	public ProtocolConfigBean protocolConfig() {
+		ProtocolConfigBean config = new ProtocolConfigBean();
+		config.setDefault(true);
+		config.setName("motan");
+		config.setMaxContentLength(1048576);
+		return config;
+	}
+
+	@Bean
+	public BasicServiceConfigBean baseServiceConfig() {
+		BasicServiceConfigBean config = new BasicServiceConfigBean();
+		config.setExport("motan:" + exportPort);
+		config.setRegistry("registry");
+		config.setRequestTimeout(6000);
+		return config;
+	}
+}

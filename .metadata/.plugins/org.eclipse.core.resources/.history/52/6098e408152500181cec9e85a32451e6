@@ -1,0 +1,48 @@
+package com.yindeyue.controller;
+
+import javax.sql.DataSource;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class Data1 {
+	@Autowired
+	@Qualifier("d1")
+	private DataSource dataSource;
+
+	@Bean("sql1")
+	public SqlSessionFactory getSqlSessionFactory() throws Exception {
+		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+		sqlSessionFactoryBean.setDataSource(dataSource);
+		return sqlSessionFactoryBean.getObject();
+	}
+
+	@Bean("sqt1")
+	public SqlSessionTemplate getSqlSessionTemplate() throws Exception {
+		SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(getSqlSessionFactory());
+		return sqlSessionTemplate;
+	}
+
+	@Autowired
+	@Qualifier("d2")
+	private DataSource dataSource2;
+
+	@Bean("sql2")
+	public SqlSessionFactory getSqlSessionFactory2() throws Exception {
+		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+		sqlSessionFactoryBean.setDataSource(dataSource2);
+		return sqlSessionFactoryBean.getObject();
+	}
+
+	@Bean("sqt2")
+	public SqlSessionTemplate getSqlSessionTemplate2() {
+		SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(getSqlSessionFactory2());
+		return sqlSessionTemplate;
+	}
+}
